@@ -64,8 +64,8 @@ summary(genre_factor) # lists the # of occurences of each of the component categ
 # ordinal categorical variable / factor
 movielength_vector <- c("very short", "short", "medium", "short", "long", "very short", "very long")
 mvlength_factor <- factor(movielength_vector,
-							ordered = TRUE,
-							levels = c("very short", "short", "medium", "long", "very long"))
+			  ordered = TRUE,
+			  levels = c("very short", "short", "medium", "long", "very long"))
 mvlength_factor
 
 ### vector operations
@@ -190,7 +190,9 @@ movie[2]
 movie[2:3] # indices 2 and 3
 
 # named lists
-movie <- list(name = "toy story", year = 1995, genre = c("animation", "adventure", "comedy"))
+movie <- list(name = "toy story",
+	      year = 1995,
+	      genre = c("animation", "adventure", "comedy"))
 
 # accessing named lists
 movie$genre
@@ -202,7 +204,9 @@ class(movie$name)
 class(movie$foreign)
 
 # adding elements to lists
-movie <- list(name = "toy story", year = 1995, genre = c("animation", "adventure", "comedy"))
+movie <- list(name = "toy story",
+	      year = 1995,
+	      genre = c("animation", "adventure", "comedy"))
 movie["age"] <- 5
 
 # modifying list elements
@@ -223,8 +227,8 @@ movie_concatenated
 # eg. movie titles and corresponding years
 
 movies <- data.frame(name = c("toy story", "akira", "the breakfast club", "the artists", "modern times", "fight club", "city of god", "the untouchables"),
-					 year = c(1995, 1998, 1985, 2011, 1936, 1999, 2002, 1987)
-					 stringAsFactors = F)
+		     year = c(1995, 1998, 1985, 2011, 1936, 1999, 2002, 1987),
+		     stringAsFactors = F)
 movies
 
 # accessing data frame entries
@@ -248,7 +252,10 @@ tail(movies)
 movies['length'] <- c(81, 125, 97, 100, 87, 139, 130, 119)
 
 # adding a new row
-movies <- rbind(movies, c(name = "dr. strangelove", year = 1964, length = 94))
+movies <- rbind(movies, 
+		c(name = "dr. strangelove",
+		  year = 1964,
+		  length = 94))
 
 # deleting rows
 movies <- movies[-9,] # delete row 9
@@ -466,7 +473,8 @@ mode(movies_genre)
 # for arrays
 # recall that arrays can still only have one data type inside of it, but the set
 # of data types it can store is larger. e.g: an array can store matrices as elements
-sample_array <- array(1:12, dim = c(3, 2, 2)) # create an array with dimensions 3 x 2 x 2 
+sample_array <- array(1:12, 
+		      dim = c(3, 2, 2)) # create an array with dimensions 3 x 2 x 2 
 sample_array
 class(sample_array)
 mode(sample_array)
@@ -658,7 +666,9 @@ sorted_list
 paste(sorted_list, collapse = " ") # collapse determines string value that separates elements
 
 # isolate a portion of a string
-sub_string <- substr(summary[1], start = 4, stop = 50)
+sub_string <- substr(summary[1], 
+		     start = 4,
+		     stop = 50)
 sub_string # includes leading and tailing space character
 
 # trimming leading/tailing space characters
@@ -677,7 +687,8 @@ str(bestActors) # date of birth represented in non-standard form, of type int.
 # this format is the UNIX time format, counting number of seconds since january 1, 1970.
 
 # reformatting UNIX dates
-actors.birthday <- as.POSIXct(bestActors$Date.of.Birth, origin = "1970-01-01")
+actors.birthday <- as.POSIXct(bestActors$Date.of.Birth, 
+			      origin = "1970-01-01")
 # output of above will be a full timestamp in format: YYYY-MM-DD HH:MM:SS
 
 # convert above format to date class
@@ -688,7 +699,8 @@ bestActresses
 str(bestActresses) # date of birth column holds factors, not the date class
 
 # converting character formats to date
-actresses.birthday <- as.Date(bestActresses$Date.of.Birth, "%Y/%m/%d") # param says to expect the format to be "year month day" separated with slashes.
+actresses.birthday <- as.Date(bestActresses$Date.of.Birth, 
+			      "%Y/%m/%d") # param says to expect the format to be "year month day" separated with slashes.
 
 # date string formatting
 as.Date("27/06/94", "%d/%m/%y") # output: 1994-06-27, in date class format
@@ -754,23 +766,42 @@ email_df
 
 # grep
 # takes in at least two inputs, the regular expression and a list of strigns you'd like to check for a match
-grep("@.*", c("test@testing.com", "not an email", "test2@testing.com")) 
+grep("@.*", 
+     c("test@testing.com", 
+       "not an email", 
+       "test2@testing.com")) 
 # asterisk: will match zero or more of the previous element rather than one or more.
 # output above: list positions of the strings which match the regex
 
-grep("@.*", c("test@testing.com", "not an email", "test2@testing.com"), value = TRUE) # output the actual values
+grep("@.*", 
+     c("test@testing.com", 
+       "not an email", 
+       "test2@testing.com"), 
+     value = TRUE) # output the actual values
 
 # gsub
 # substitute strings found by the regular expression
-gsub("@.*", "@newdomain.com", c("test@testing.com", "not an email", "test2@testing.com")) # second argument is the replacement string.
+gsub("@.*", 
+     "@newdomain.com", 
+     c("test@testing.com", 
+       "not an email", 
+       "test2@testing.com")) # second argument is the replacement string.
 
 # extract the matched strigns
-matches <- regexpr("@.*", c("test@testing.com", "not an email", "test2@testing.com"))
-regmatches(c("test@testing.com", "not an email", "test2@testing.com"), matches)
+matches <- regexpr("@.*", 
+		   c("test@testing.com", 
+		     "not an email", 
+		     "test2@testing.com"))
+regmatches(c("test@testing.com", 
+	     "not an email", 
+	     "test2@testing.com"), 
+	   matches)
 
 # solving the example problem:
-matches <- regexpr("@.*\\.", email_df[,'Email']) # apply a regex to the email column, isolating everything from the @ sign to the .
-email_df[,'Domain'] = regmatches(email_df[,'Email'], matches) # extract the matching substrings and add them to a new column called 'domain'
+matches <- regexpr("@.*\\.", 
+		   email_df[,'Email']) # apply a regex to the email column, isolating everything from the @ sign to the .
+email_df[,'Domain'] = regmatches(email_df[,'Email'], 
+				 matches) # extract the matching substrings and add them to a new column called 'domain'
 email_df
 table(email_df[,'Domain']) # construct a frequency table for the domains in the data frame.
 
